@@ -6,6 +6,8 @@ import "./Game.css";
 const NUM_DICE = 5;
 const NUM_ROLLS = 3;
 const NUM_ROUNDS = 13;
+localStorage.setItem("highScore", 0);
+let storedHighScore = parseInt(localStorage.getItem("highScore"), 10);
 
 export default class Game extends Component {
   constructor(props) {
@@ -84,6 +86,10 @@ export default class Game extends Component {
     for (let key in scores) {
       if (scores[key]) totalScore += scores[key];
     }
+    if (totalScore > storedHighScore) {
+      localStorage.setItem("highScore", totalScore);
+      storedHighScore = parseInt(localStorage.getItem("highScore"), 10);
+    }
     return totalScore;
   };
 
@@ -94,6 +100,7 @@ export default class Game extends Component {
       rollsLeft: NUM_ROLLS,
       roundsLeft: NUM_ROUNDS,
       rolling: false,
+      // highScore: localStorage.getItem("highScore"),
       scores: {
         ones: undefined,
         twos: undefined,
@@ -132,7 +139,12 @@ export default class Game extends Component {
         <header className="Game-header">
           <h1 className="App-title-gameover">Yahtzee!</h1>
           <h2 className="App-title-gameover-h2">Game Over!</h2>
-          <h2 className="Game-scores">YOUR SCORE: {this.getTotalScore()}</h2>
+          <div className="scores">
+            <h2 className="Game-scores">YOUR SCORE: {this.getTotalScore()}</h2>
+            <h2 className="Game-scores">
+              HIGH SCORE: {localStorage.getItem("highScore")}
+            </h2>
+          </div>
           <button className="Game-reroll" onClick={this.newGame}>
             New Game
           </button>

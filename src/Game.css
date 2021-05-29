@@ -13,6 +13,11 @@
   overflow: hidden;
 }
 
+.scores {
+  display: flex;
+  justify-content: space-evenly;
+}
+
 h2 {
   font-weight: 100;
   font-size: 2em;
